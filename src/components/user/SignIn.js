@@ -32,9 +32,9 @@ class SignIn extends React.Component {
 }
 
 
-onSubmit = formValues => {
-  this.props.signIn(formValues);
-}
+  onSubmit = formValues => {
+    this.props.signIn(formValues);
+  }
 
 
   render () {
@@ -48,14 +48,14 @@ onSubmit = formValues => {
               name='username'
               component={this.renderField}
               label='Username'
-              placeholder='enter username'
+              placeholder='Enter username'
             />
              <Field  
               Type='password' 
               name='password' 
               component={this.renderField}  
               label='Password'
-              placeholder ='enter password'
+              placeholder ='Enter password'
             />  
              
             <button className="ui button primary" >Submit</button>
@@ -66,7 +66,10 @@ onSubmit = formValues => {
         </div>      
       );
     }else {
-      return <div>{history.push('/')}</div>;
+      return (
+        <div>
+          {history.push('/')}
+        </div>);
     }
     
   }
@@ -77,13 +80,13 @@ const validate = formValues => {
   const errors = {};
   
   if(!formValues.username){
-    errors.username = "must enter username!!!";  
+    errors.username = "Username required......!!!";  
   }else if(formValues.username.length>20){
-    errors.username = 'Max length is 20 character'
+    errors.username = 'Invalid'
   } 
 
   if(!formValues.password){
-    errors.password = "must enter password!!!";
+    errors.password = "Password required........!!!";
   }
 
   return errors;

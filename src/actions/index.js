@@ -15,7 +15,7 @@ export const signIn = formValues => async () => {
       const response  = await axios.post('jwt-auth/v1/token',{...formValues});
       //console.log(response.data)
       
-      toastrSuccess(`SignIn Successful`,`${formValues.username}`)
+      toastrSuccess(`Successfully signin`,`${formValues.username}`)
       
       //It will set the currently logged in user data on localstorage
       localStorage.setItem("validToken", response.data.token);
@@ -26,7 +26,7 @@ export const signIn = formValues => async () => {
       history.push('/post/list'); 
     }
     catch(error){
-      toastrFailure(` Error due to form submission`,`${formValues.username}`);
+      toastrFailure(` Enter valid data`,`${formValues.username}`);
     }     
   };
 //............................................................................................
@@ -35,13 +35,12 @@ export const signIn = formValues => async () => {
   export const signUp = formValues => async () => {
     try{
       const response  = await axios.post('wp/v2/users/register',{...formValues});
-      //console.log(response.data)
-      toastrSuccess(`${response.data.message}`,`${formValues.username}`)
-      history.push('/'); 
+      console.log(response.data)
+      toastrSuccess(`Successfully registered`,`${formValues.username}`)
+      history.push('/user/login'); 
     }
     catch(error){
-      alert('already exist')
-      toastrFailure(`Error due to form submission`,`${formValues.username}`);
+      toastrFailure(`Already exists`,`${formValues.username}`);
     }   
   };
 //...........................................................................................
@@ -92,9 +91,10 @@ export const veiwUser = id => async (dispatch) => {
       //console.log(formValues)
       const response  = await axios1.post('/wp/v2/posts',{...formValues});
       console.log(response.data);
+      toastrSuccess(`Successfully created`,`${formValues.title}`)
       history.push('/post/list');
     }catch(error){
-      toastrFailure(`Error due to creating post`,`${formValues.title}`);
+      toastrFailure(`Try again`,`${formValues.title}`);
     } 
   };
 
@@ -107,9 +107,9 @@ export const editPost = (id,formValues)=> async (dispatch) => {
     toastrSuccess(`Your post is Successfully updated `,`${formValues.title}`);
     
     dispatch({type: EDIT_POST, payload: response.data})
-    history.push('/')
+    history.push('/post/list')
   }catch(error){
-    toastrFailure(`Eroor due to form submission`);
+    toastrFailure(`Try again`);
   }  
 };
 //.........................................................................................
@@ -124,7 +124,7 @@ export const deletePost = (id)=> async (dispatch) => {
     history.push('/post/list'); 
   }catch(error){
     toastrFailure(`Error`,`post is not deleted`);
-    history.push('/'); 
+    history.push('/post/list'); 
   }  
 };
 

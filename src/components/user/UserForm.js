@@ -95,47 +95,45 @@ const validate = formValues => {
   const errors = {};
   
   if(!formValues.first_name){
-    errors.first_name = "must enter first name!!!";
+    errors.first_name = "First name required !!!";
   }else if(formValues.first_name.length>30){
     errors.password = 'Max length is 30 character'
   }
 
   if(!formValues.last_name){
-    errors.last_name = "must enter last name!!!";
+    errors.last_name = "Last name required!!!";
   }else if(formValues.last_name.length>30){
     errors.password = 'Max length is 30 character'
   }
 
   if(!formValues.email){
-    errors.email = "must enter  email!!!"; 
-  }
-  if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)) {
+    errors.email = "Email required!!!"; 
+  }else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(formValues.email)) {
     errors.email = 'Enter Valid Email'
   }
 
   if(!formValues.username){
-    errors.username = "must enter username!!!";
+    errors.username = "Username required......!!!";
   }else if(formValues.username.length>30){
     errors.password = 'Max length is 30 character'
-  }
-  if (!/[^a-zA-Z0-9 ]/i.test(formValues.username)) {
-    errors.username = 'Only Alfanumeric value will aceepted'
+  }else if (!/[^a-zA-Z0-9 ]/i.test(formValues.username)) {
+    errors.username = 'Only Alphanumeric value will accepted'
   }
 
   if(!formValues.password){
-    errors.password = "must enter password!!!";
-  }else if(formValues.password.length>6 && formValues.password.length<8){
-    errors.password = 'Minimum length is 6 and maximum is 8 character'
+    errors.password = "Password required.....!!!";
+  }else if(formValues.password.length<6 ){
+    errors.password = 'Minimum length is 6'  
+  }else if(formValues.password.length>20 ){
+    errors.password = 'Minimum length is 20' 
   }
-  if (!/[^a-zA-Z0-9 ]/i.test(formValues.password)) {
+  else if (!/[^a-zA-Z0-9 ]/i.test(formValues.password)) {
     errors.password = 'Only Alfanumeric value will aceepted'
   }
 
   if(!formValues.cpassword){
-    errors.cpassword = "must enter confirm Password!!!";
-  }
-
-  if(formValues.password !== formValues.cpassword){
+    errors.cpassword = "Confirm your password!!!";
+  }else if(formValues.password !== formValues.cpassword){
     errors.cpassword = "mismatch password!!!";
   }
   return errors;

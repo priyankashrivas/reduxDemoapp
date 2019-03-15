@@ -43,7 +43,18 @@ class PostForm extends React.Component {
               </select>
               {this.renderError(meta)}
             </div>
-          )
+        )
+    }
+
+    renderContent = ({input,label,meta}) => {
+        const className=`Field ${meta.error && meta.touched ? 'error' : ' '}`;
+        return (
+            <div className ={className}>
+                <label>{label}</label>
+                <textarea {...input} placeholder ={label} rows="10" cols="30"autoComplete="off"/>
+                {this.renderError(meta)}
+            </div>
+        );  
     }
     
     onSubmit = formValues =>{
@@ -61,8 +72,8 @@ class PostForm extends React.Component {
                 />
                 <Field 
                     name ="content" 
-                    component={this.renderInput}  
-                    placeholder ='enter description' 
+                    component={this.renderContent}  
+                    placeholder ='Enter content' 
                     label="Enter description" 
                 />
                 <Field 
@@ -86,18 +97,19 @@ class PostForm extends React.Component {
 const validate =(formValues) => {
     const error ={};
     if(!formValues.title){
-        error.title= "you must enter the title";
-    }else if(formValues.title.length>15){
-        error.title = 'Max length is 15 character'
+        error.title= "Title required";
+    }else if(formValues.title.length>20){
+        error.title = 'Max length is 20 character'
     }
 
     if(!formValues.content){
-        error.content="you must enter the description";
+        error.content="Content can't be empty";
+    }else if(formValues.content.length<3){
+        error.content = 'Content should be more than 3 characters'
     }else if(formValues.content.length>200){
-        error.content = 'Max length is 200 character'
-    }else if(formValues.content.length<10){
-        error.content = 'Min length is 10 character'
+        error.content = 'max length is 200 characters'
     }
+
     if(!formValues.status){
         error.status = "Select status.............!!!";
     }

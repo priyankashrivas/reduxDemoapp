@@ -10,6 +10,10 @@ class PostList extends React.Component {
     this.props.postList()
   }
 
+  removeHTMLTag(str) {
+    return str.replace(/<[/]?\w+>/g, "");
+  }
+
   renderAdmin (post) {
    // console.log(localStorage.getItem("userId") ,'renderadmin');
     if((post.author).toString() === localStorage.getItem("userId")){
@@ -24,18 +28,19 @@ class PostList extends React.Component {
 
   renderPostList(){
     if(localStorage.getItem("validToken")){
-      //console.log(this.props.posts,'render');
+      console.log(this.props.posts,'render');
       return this.props.posts.map(post => {
+        console.log(post,'render');
         return (
           <div className='item' key={post.id}>
-          {this.renderAdmin(post)}
+           {this.renderAdmin(post)} 
             <i className='large middle aligned icon user' />
             <div className='content'>
               <Link to={`/post/view/${post.id}`} className="header">
-              {post.title.rendered}
+             {post.id} {post.title.rendered}
               </Link>
               <div className='description'>
-                {post.content.rendered}
+                {this.removeHTMLTag(post.content.rendered)}
               </div>
             </div>
           </div>
@@ -61,7 +66,7 @@ class PostList extends React.Component {
 }
 
 const mapStateToProps = ({posts}) => {
-  //console.log(posts)
+  console.log(posts)
   return {
     posts: Object.values(posts)
   }
